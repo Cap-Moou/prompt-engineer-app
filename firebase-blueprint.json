@@ -1,0 +1,57 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Public and private user data.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "email"]
+    },
+    "SavedProject": {
+      "title": "Saved Project",
+      "description": "Full prompt configuration for later editing.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "config": { "type": "object" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["userId", "name", "config", "timestamp"]
+    },
+    "SavedPrompt": {
+      "title": "Saved Prompt",
+      "description": "Final generated text prompt result.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "prompt": { "type": "string" },
+        "title": { "type": "string" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["userId", "prompt", "title", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile data."
+    },
+    "/users/{userId}/projects/{projectId}": {
+      "schema": "SavedProject",
+      "description": "Projects saved by the user."
+    },
+    "/users/{userId}/library/{promptId}": {
+      "schema": "SavedPrompt",
+      "description": "Generated prompts saved to the user's library."
+    }
+  }
+}
